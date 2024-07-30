@@ -1,0 +1,129 @@
+---
+title: "Untitled"
+author: "u7151703"
+date: "2024-07-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tidyverse)
+library(ggtree)
+library(dplyr)
+library(phytools)
+library(ape)
+library(ggnewscale)
+library(shadowtext)
+library(TDbook)
+library(treeio)
+library(tidytree)
+```
+
+```{r}
+exon200_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon200_unrooted.treefile")
+main_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/63K.treefile")
+```
+
+```{r}
+#exon200_tree <- root(exon200_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+exon200_tree <- root(exon200_tree, outgroup = 'Struthio_camelus', edgelabel = TRUE)
+main_tree <- root(main_tree, outgroup = 'Struthio_camelus', edgelabel = TRUE)
+```
+
+```{r}
+d2 <- fortify(exon200_tree, branch.length = 'none')
+d1 <- fortify(main_tree, branch.length = 'none')
+```
+
+```{r}
+d2$x <- max(d2$x) - d2$x + max(d1$x) + 4
+
+dd = bind_rows(d1,d2) %>% 
+  filter(!is.na(label)) 
+
+```
+
+```{r}
+ggtree(main_tree , branch.length=NULL)+
+  geom_tree()+
+  geom_tree(data = d2)+
+  geom_tiplab(data=d1, size = 1.5)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)+
+  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.5, nudge_y = 0.6 )+
+  geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
+```
+
+
+### remove passeriformes
+
+```{r}
+exon200_tree <- root(exon200_tree, outgroup = 'Acanthisitta_chloris', edgelabel = TRUE)
+main_tree <- root(main_tree, outgroup = 'Acanthisitta_chloris', edgelabel = TRUE)
+```
+
+```{r}
+d4 <- fortify(exon200_tree, branch.length = 'none')
+d3 <- fortify(main_tree, branch.length = 'none')
+```
+
+```{r}
+d4$x <- max(d4$x) - d4$x + max(d3$x) + 4
+
+dd = bind_rows(d3,d4) %>% 
+  filter(!is.na(label)) 
+
+```
+
+```{r}
+ggtree(main_tree , branch.length=NULL)+
+  geom_tree()+
+  geom_tree(data = d4)+
+  geom_tiplab(data=d3, size = 1.5)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)+
+  geom_nodelab(data=d4, size = 1.5, nudge_x = 0.5, nudge_y = 0.6 )+
+  geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
+```
+
+```{r}
+which(d3$label == "Nestor_notabilis") #392
+which(d4$label == "Nestor_notabilis") #415
+```
+
+```{r}
+sub_main <- tree_subset(main_tree, node=392, levels_back=0)
+sub_exon200 <- tree_subset(exon200_tree, node=415, levels_back=0)
+
+sub_main <- root(sub_main, outgroup = 'Struthio_camelus', edgelabel = TRUE)
+sub_exon200 <- root(sub_exon200, outgroup = 'Struthio_camelus', edgelabel = TRUE)
+```
+
+
+```{r}
+d6 <- fortify(sub_exon200, branch.length = 'none')
+d5 <- fortify(sub_main, branch.length = 'none')
+```
+
+```{r}
+d6$x <- max(d6$x) - d6$x + max(d6$x) + 8
+
+dd = bind_rows(d5,d6) %>% 
+  filter(!is.na(label)) 
+
+```
+
+```{r}
+ggtree(sub_main , branch.length=NULL)+
+  geom_tree()+
+  geom_tree(data = d6)+
+  geom_tiplab(data=d5, size = 1.5)+
+  geom_tiplab(data=d6, size = 1.5, hjust = 1)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)+
+  geom_nodelab(data=d6, size = 1.5, nudge_x = 0.5, nudge_y = 0.6 )+
+  geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
+```
+
+

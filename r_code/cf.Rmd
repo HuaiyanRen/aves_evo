@@ -1,0 +1,33 @@
+---
+title: "Untitled"
+author: "u7151703"
+date: "2024-07-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+tab200=read.table('exon200_gcf.cf.stat',header=TRUE)
+tab14k=read.table('exon14k_gcf.cf.stat',header=TRUE)
+```
+
+
+```{r}
+tab200 <- tab200 %>% mutate(data = "exon200_mf")
+tab14k <- tab14k %>% mutate(data = "exon14k_ref")
+
+gcf_data <- bind_rows(tab200, tab14k)
+```
+
+```{r}
+ggplot(gcf_data, aes(x = data, y = gCF, fill = data))+
+  geom_boxplot()
+```
+
+```{r}
+ggplot(gcf_data, aes( x = gCF, color = data))+
+  geom_density()
+```
