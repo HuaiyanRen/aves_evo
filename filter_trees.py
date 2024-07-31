@@ -1,16 +1,20 @@
 from ete3 import Tree
 
-input_file = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_datasets\named.trees'
-output_file =  r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_datasets\exon14k_trees.txt'
+with open("14972_exon_alns_namelist.txt") as f:
+    f_list = f.readlines()
+    
+output_file = 'filtered_trees.txt'
+with open(output_file, 'w+') as f:
+    a =1
 
-treefile_list = []
-with open(input_file) as f:
-    for line in f.readlines():
-        treefile_list.append(line.split()[1].replace("/", ""))
+for i in range(200):
+    f_name = f_list[i].split(" ")[1]
+    tree_file = 'trees/' + f_name.split(".")[0] +".treefile"
+
+    treestr = open(tree_file,'r').read()
+    tree = Tree(treestr,format = 1)
+    
+    with open(output_file, 'a+') as f:
+        f.write(tree.write(format = 9) + '\n')
 
 
-with open(output_file, 'w') as output_file:
-    for treefile in treefile_list:
-        output_file.write(treefile +'\n')
-        
-        
