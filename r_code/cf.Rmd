@@ -10,6 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+library(patchwork)
+```
+
+
+```{r}
 tab200=read.table('exon200_gcf.cf.stat',header=TRUE)
 tab200ref=read.table('exon200ref_gcf.cf.stat',header=TRUE)
 ```
@@ -23,12 +28,12 @@ gcf_data <- bind_rows(tab200, tab200ref)
 ```
 
 ```{r}
-ggplot(gcf_data, aes(x = data, y = gCF, fill = data))+
+p1 = ggplot(gcf_data, aes(x = data, y = gCF, fill = data))+
   geom_boxplot()
 ```
 
 ```{r}
-ggplot(gcf_data, aes( x = gCF, color = data))+
+p2 = ggplot(gcf_data, aes( x = gCF, color = data))+
   geom_density()
 ```
 
@@ -53,13 +58,13 @@ qcf_data <- bind_rows(qtab200, qtab200ref)
 ```
 
 ```{r}
-ggplot(qcf_data, aes(x = data, y = as.numeric(label), fill = data))+
+p1 = ggplot(qcf_data, aes(x = data, y = as.numeric(label), fill = data))+
   geom_boxplot()+
   labs(y = "qCF")
 ```
 
 ```{r}
-ggplot(qcf_data, aes( x = as.numeric(label), color = data))+
+p2 = ggplot(qcf_data, aes( x = as.numeric(label), color = data))+
   geom_density()+
   labs(x = "qCF")
 ```
