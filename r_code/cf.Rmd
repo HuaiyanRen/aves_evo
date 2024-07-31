@@ -11,15 +11,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 tab200=read.table('exon200_gcf.cf.stat',header=TRUE)
-tab14k=read.table('exon14k_gcf.cf.stat',header=TRUE)
+tab200ref=read.table('exon200ref_gcf.cf.stat',header=TRUE)
 ```
 
 
 ```{r}
-tab200 <- tab200 %>% mutate(data = "exon200_mf")
-tab14k <- tab14k %>% mutate(data = "exon14k_ref")
+tab200 <- tab200 %>% mutate(data = "Mix")
+tab200ref <- tab200ref %>% mutate(data = "paper")
 
-gcf_data <- bind_rows(tab200, tab14k)
+gcf_data <- bind_rows(tab200, tab200ref)
 ```
 
 ```{r}
@@ -30,4 +30,36 @@ ggplot(gcf_data, aes(x = data, y = gCF, fill = data))+
 ```{r}
 ggplot(gcf_data, aes( x = gCF, color = data))+
   geom_density()
+```
+
+```{r}
+exon200_qcf <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon200_main.treefile")
+exon200ref_qcf <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon200ref_main.treefile")
+```
+
+```{r}
+exon200_qcf <- root(exon200_qcf, outgroup = 'STRCAM', edgelabel = TRUE)
+exon200ref_qcf <- root(exon200ref_qcf, outgroup = 'STRCAM', edgelabel = TRUE)
+
+exon200_qdata <- fortify(exon200_qcf, branch.length = 'none')
+exon200ref_qdata <- fortify(exon200ref_qcf, branch.length = 'none')
+```
+
+```{r}
+qtab200 <- exon200_qdata[c(365:724),] %>% mutate(data = "Mix")
+qtab200ref <- exon200ref_qdata[c(365:724),] %>% mutate(data = "paper")
+
+qcf_data <- bind_rows(qtab200, qtab200ref)
+```
+
+```{r}
+ggplot(qcf_data, aes(x = data, y = as.numeric(label), fill = data))+
+  geom_boxplot()+
+  labs(y = "qCF")
+```
+
+```{r}
+ggplot(qcf_data, aes( x = as.numeric(label), color = data))+
+  geom_density()+
+  labs(x = "qCF")
 ```

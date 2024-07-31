@@ -5,7 +5,7 @@ def abbreviate_species_name(species_name):
     abbreviation = ''.join([word[:3].upper() for word in words])
     return abbreviation
 
-candi_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\exon14k_ref.treefile'
+candi_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\exon200.treefile'
 candi_treestr = open(candi_treefile,'r').read()
 candi_tree = Tree(candi_treestr,format = 1)
 
@@ -67,7 +67,7 @@ for n in candi_tree.traverse():
             print('outlier!')
                 
 candi_tree.unroot()
-with open(r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\exon14k_ref_unrooted.treefile', 'w+') as result:
+with open(r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\exon200_unrooted.treefile', 'w+') as result:
     result.write(candi_tree.write(format = 1) + '\n')    
 
 
