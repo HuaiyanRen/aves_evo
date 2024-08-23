@@ -1,0 +1,106 @@
+---
+title: "cds4"
+author: "u7151703"
+date: "2024-08-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+cds4mix_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/mixture.treefile")
+abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/species_pruned.treefile")
+```
+
+```{r}
+abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/63K_abb.treefile")
+```
+
+```{r}
+cds4mix_tree <- root(cds4mix_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+abbmain_tree <- root(abbmain_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+```
+
+```{r}
+cds4mix_tree <- groupOTU(cds4mix_tree, grp, 'lab')
+
+p1 <- ggtree(cds4mix_tree, branch.length = 'none', aes(color = lab))+
+  #geom_tree()+
+  geom_tiplab(, size = 1.5)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)
+
+d1 <- p1$data
+```
+
+```{r}
+abbmain_tree <- groupOTU(abbmain_tree, grp, 'lab')
+
+p2 <- ggtree(abbmain_tree, branch.length = 'none', aes(color = lab))+
+  #geom_tree()+
+  geom_tiplab(, size = 1.5)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)
+
+d2 <- p2$data
+```
+
+
+```{r}
+d2$x <- max(d2$x) - d2$x + max(d1$x) + 4
+dd = bind_rows(d1,d2) %>% 
+  filter(!is.na(label)) 
+```
+
+```{r}
+ggtree(cds4mix_tree, branch.length = 'none', aes(color = lab))+
+  geom_tree()+
+  geom_tree(data = d2)+
+  geom_tiplab(size = 1.5)+
+  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)+
+  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.5, nudge_y = 0.6 )+
+  geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
+```
+
+
+
+
+```{r}
+p %>% collapse(node = 395)
+#395 
+```
+
+```{r}
+d2 <- fortify(abbmain_tree, branch.length = 'none') #63K_abb
+
+grp <- list(a_Palaeognathae_1 = d2[[4]][345:363],
+            b_Galloanseres_2 = d2[[4]][1:18],
+            c_Mirandornithes_3 = d2[[4]][19:21],
+            d_Columbimorphae_4 = d2[[4]][323:331],
+            e_Otidimorphae_5 = d2[[4]][332:344],
+            f_Opisthocomiformes_6 = d2[[4]][286],
+            g_Cursorimorphae_7 = d2[[4]][287:322],
+            h_Strisores_8 = d2[[4]][274:285],
+            i_Phaethontimorphae_9 = d2[[4]][244:246],
+            j_Aequornithes_10 = d2[[4]][247:273],
+            k_Afroaves_11 = d2[[4]][206:243],
+            l_Australaves_12 = d2[[4]][19:205]
+            )
+
+
+abbmain_tree <- groupOTU(abbmain_tree, grp, 'lab')
+```
+
+```{r}
+p  <- ggtree(abbmain_tree, branch.length = 'none', aes(color = lab))+
+  geom_tiplab(size = 1.5)+
+  theme(legend.position="right")
+```
+
+```{r}
+p %>% collapse(node = 391)
+```
+
+
+
