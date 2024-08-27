@@ -26,21 +26,21 @@ with open("14972_exon_alns_namelist.txt") as f:
 def running_i(i):
 
     
-    f_name = f_list[i].split(" ")[1]
-    out_name = '14972_exon_results/'+str(i) + '_' +f_name.split(".")[0]
+    f_name = 'c123/'+ f_list[i].split(" ")[1].split('.')[0] + '.cds.fa'
+    out_name = 'mix_c123/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.onnxupdate-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G,R,I+R -pre '+out_name+ ' -nt 1 -s 14972_exon_alns/'+f_name 
+    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G,R,I+R -wspm -qmax 20 -pre '+out_name+ ' -nt 1 -s '+f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'w') as f:
         #f.write(result.stdout)
         f.write(result.stderr)
 
 # 14972
-i_list = list(np.arange(0, 200, 1))
+i_list = list(np.arange(0, 100, 1))
 
 
 partial_running = partial(running_i)
 
-with Pool(40) as p:
+with Pool(50) as p:
     score_list = p.map(partial_running, i_list)
 
