@@ -1,0 +1,25 @@
+---
+title: "Untitled"
+author: "u7151703"
+date: "2024-08-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+nrf_long <- nrf_mix_c12 %>%
+  pivot_longer(cols = starts_with("nrf"), names_to = "type", values_to = "nrf") %>%
+  mutate(type = str_replace(type, "nrf_", ""))
+```
+
+
+```{r}
+#%>% filter(type != 'ref')
+ggplot(nrf_long , aes(x= type, y=nrf,color = type))+
+  geom_boxplot()+
+  theme_bw()
+```
+
