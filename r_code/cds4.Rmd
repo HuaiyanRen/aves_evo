@@ -57,7 +57,7 @@ p %>% collapse(node = 391)
 # comparson
 ```{r}
 cds4mix_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/partition12.treefile")
-abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/partition.treefile")
+abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/GALGAL_R00004.treefile")
 ```
 
 
