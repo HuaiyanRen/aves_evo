@@ -56,8 +56,8 @@ p %>% collapse(node = 391)
 
 # comparson
 ```{r}
-cds4mix_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/partition12.treefile")
-abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/GALGAL_R00004.treefile")
+cds4mix_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/mixture.treefile")
+abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/species_pruned.treefile")
 ```
 
 
@@ -67,11 +67,19 @@ abbmain_tree <- root(abbmain_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
 ```{r}
-cds4mix_tree <- groupOTU(cds4mix_tree, grp, 'lab')
+cds4mix_tree <- groupOTU(cds4mix_tree, grp, 'clade')
 
-p1 <- ggtree(cds4mix_tree, branch.length = 'none', aes(color = lab))
+p1 <- ggtree(cds4mix_tree, branch.length = 'none', aes(color = clade))
 
-p1$data$lab <- factor(p1$data$lab, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
+p1 <- scaleClade(p1, node=322, scale=.01) # which(d1[,4] == 'ACACHL')
+p1 <- scaleClade(p1, node=395, scale=.01) # which(d1[,4] == 'APTROW')
+p1 <- scaleClade(p1, node=387, scale=.1) # which(d1[,4] == 'ALELAT')
+p1 <- scaleClade(p1, node=377, scale=.1) # which(d1[,4] == 'BRALEP')
+p1 <- scaleClade(p1, node=364, scale=.1) # which(d1[,4] == 'GAVSTE')
+p1 <- scaleClade(p1, node=348, scale=.1) # which(d1[,4] == 'PLUSOC')
+p1 <- scaleClade(p1, node=337, scale=.1) # which(d1[,4] == 'NYCLEU')
+
+p1$data$clade <- factor(p1$data$clade, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
                                             'Columbimorphae_4','Otidimorphae_5','Opisthocomiformes_6',
                                             'Cursorimorphae_7','Strisores_8','Phaethontimorphae_9',
                                             'Aequornithes_10','Afroaves_11','Australaves_12'))
@@ -79,11 +87,19 @@ d1 <- p1$data
 ```
 
 ```{r}
-abbmain_tree <- groupOTU(abbmain_tree, grp, 'lab')
+abbmain_tree <- groupOTU(abbmain_tree, grp, 'clade')
 
-p2 <- ggtree(abbmain_tree, branch.length = 'none', aes(color = lab))
+p2 <- ggtree(abbmain_tree, branch.length = 'none', aes(color = clade))
 
-p2$data$lab <- factor(p2$data$lab, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
+p2 <- scaleClade(p2, node=241, scale=.01)
+p2 <- scaleClade(p2, node=235, scale=.01)
+p2 <- scaleClade(p2, node=233, scale=.1)
+p2 <- scaleClade(p2, node=393, scale=.1) 
+p2 <- scaleClade(p2, node=406, scale=.1)
+p2 <- scaleClade(p2, node=423, scale=.1)
+p2 <- scaleClade(p2, node=416, scale=.1)
+
+p2$data$clade <- factor(p2$data$clade, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
                                             'Columbimorphae_4','Otidimorphae_5','Opisthocomiformes_6',
                                             'Cursorimorphae_7','Strisores_8','Phaethontimorphae_9',
                                             'Aequornithes_10','Afroaves_11','Australaves_12'))
@@ -92,26 +108,22 @@ d2 <- p2$data
 
 
 ```{r}
-d2$x <- max(d2$x) - d2$x + max(d1$x) + 4
+d2$x <- max(d2$x) - d2$x + max(d1$x) + 15 #4
 dd = bind_rows(d1,d2) %>% 
   filter(!is.na(label)) 
 ```
 
 ```{r}
-p1 +
+p1 <- p1 +
   geom_tree()+
   geom_tree(data = d2)+
   geom_tiplab(size = 1.5)+
-  geom_nodelab(size = 1.5, nudge_x = -0.5, nudge_y = 0.6)+
-  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.5, nudge_y = 0.6 )+
+  geom_tiplab(data= d2, size = 1.5, hjust=1)+
+  geom_nodelab(size = 1.5, nudge_x = -0.7, nudge_y = 0.6)+
+  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.7, nudge_y = 0.6 )+
   geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
 ```
 
-
-```{r}
-#p %>% collapse(node = 395)
-#395 
-```
 
 
 
