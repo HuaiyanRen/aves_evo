@@ -54,12 +54,11 @@ p %>% collapse(node = 391)
 ```
 
 
-# comparson
+# comparson scale
 ```{r}
 cds4mix_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/mixture.treefile")
 abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/cds4/species_pruned.treefile")
 ```
-
 
 ```{r}
 cds4mix_tree <- root(cds4mix_tree, outgroup = 'STRCAM', edgelabel = TRUE)
@@ -120,7 +119,7 @@ p1 <- p1 +
   geom_tiplab(size = 1.5)+
   geom_tiplab(data= d2, size = 1.5, hjust=1)+
   geom_nodelab(size = 1.5, nudge_x = -0.7, nudge_y = 0.6)+
-  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.7, nudge_y = 0.6 )+
+  #geom_nodelab(data=d2, size = 1.5, nudge_x = 0.7, nudge_y = 0.6 )+
   geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
 ```
 
