@@ -60,40 +60,50 @@ def run_aa(tuple_list):
         #f.write(result.stdout)
         f.write(result.stderr)
  
-def run_aa_c60(tuple_list):     
+def run_aa_c20(tuple_list):     
     model, i = tuple_list  
     f_name = 'pep/'+ f_list[i].split(" ")[1].split('.')[0] + '.pep.fa'
     out_name = 'aa/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
-    out_name_c60 = 'aa_c60/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
+    out_name_c20 = 'aa_c20/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
     
-    if os.path.isfile(out_name + '.iqtree'):
-        if not os.path.isfile(out_name_c60 + '.iqtree'):
-            rhas = ''
-            with open(out_name + '.iqtree') as f:
-                for line in f.readlines():
-                    if 'Best-fit model according to BIC: ' in line:
-                        if '+F' in line:
-                            rhas = line.split('+F')[-1].rstrip('\n') 
-                        else:
-                            rhas = line.split('Q.bird')[-1].rstrip('\n') 
-    
-            cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m Q.bird+C60' + rhas + ' -pre '+out_name_c60+ ' -nt 1 -s '+f_name 
-            result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
-            with open(out_name_c60 + '_time.txt', 'w') as f:
-                #f.write(result.stdout)
-                f.write(result.stderr)
-    else:
-        print(out_name + '.iqtree does not exist')
+# =============================================================================
+#     if os.path.isfile(out_name + '.iqtree'):
+#         if not os.path.isfile(out_name_c20 + '.iqtree'):
+#             rhas = ''
+#             with open(out_name + '.iqtree') as f:
+#                 for line in f.readlines():
+#                     if 'Best-fit model according to BIC: ' in line:
+#                         if '+F' in line:
+#                             rhas = line.split('+F')[-1].rstrip('\n') 
+#                         else:
+#                             rhas = line.split('Q.bird')[-1].rstrip('\n') 
+#     
+#             cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m Q.bird+C20' + rhas + ' -pre '+out_name_c20+ ' -nt 3 -s '+f_name 
+#             result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+#             with open(out_name_c20 + '_time.txt', 'w') as f:
+#                 #f.write(result.stdout)
+#                 f.write(result.stderr)
+#     else:
+#         print(out_name + '.iqtree does not exist')
+# =============================================================================
+        
+    cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m Q.bird+C20+I+G -pre '+out_name_c20+ ' -nt 3 -s '+f_name 
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name_c20 + '_time.txt', 'w') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)
 
 # 14972
 def control(model, start, end, n_pool):
-    if model not in ['mix123', 'mix12', 'aa', 'aa_c60']:
+    if model not in ['mix123', 'mix12', 'aa', 'aa_c20']:
         print("wrong model type")
         sys.exit(1)
            
     start = int(start)
     end = int(end)
     n_pool = int(n_pool)
+    if model == 'aa_c20':
+        n_pool = int(n_pool/3)
     
     replicates = list(np.arange(start,end,1))
     
@@ -108,14 +118,14 @@ def control(model, start, end, n_pool):
         partial_running = partial(run_mix12)
     elif model == 'aa':
         partial_running = partial(run_aa)
-    elif model == 'aa_c60':
-        partial_running = partial(run_aa_c60)   
+    elif model == 'aa_c20':
+        partial_running = partial(run_aa_c20)   
         
     with Pool(n_pool) as p:
         p.map(partial_running, tuple_list)
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--model', '-m', help='one of mix123 mix12 aa aa_c60',
+parser.add_argument('--model', '-m', help='one of mix123 mix12 aa aa_c20',
                     required=True)
 parser.add_argument('--start', '-r1', help='', 
                     required=True)
