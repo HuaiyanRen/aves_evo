@@ -1,0 +1,68 @@
+---
+title: "Untitled"
+author: "u7151703"
+date: "2024-09-02"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 86 loci
+```{r}
+main_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/63K_abb.treefile")
+exon_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/exon_ref_unrooted.treefile")
+
+mixc12_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon100/mix_c12_86_unrooted.treefile")
+mixc123_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon100/mix_c123_86_unrooted.treefile")
+aa_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon100/aa_86_unrooted.treefile")
+exon86_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon100/refexon_86_unrooted.treefile")
+```
+
+```{r}
+main_tree <- root(main_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+exon_tree <- root(exon_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+mixc12_tree <- root(mixc12_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+mixc123_tree <- root(mixc123_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+aa_tree <- root(aa_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+exon86_tree <- root(exon86_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+```
+
+```{r}
+tree1 <- groupOTU(mixc12_tree, grp, 'clade')
+tree2 <- groupOTU(exon_tree, grp, 'clade')
+
+p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
+p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
+
+p1$data$clade <- factor(p1$data$clade, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
+                                            'Columbimorphae_4','Otidimorphae_5','Opisthocomiformes_6',
+                                            'Cursorimorphae_7','Strisores_8','Phaethontimorphae_9',
+                                            'Aequornithes_10','Afroaves_11','Australaves_12'))
+d1 <- p1$data
+
+
+
+
+
+p2$data$clade <- factor(p2$data$clade, levels = c('Palaeognathae_1','Galloanseres_2','Mirandornithes_3',
+                                            'Columbimorphae_4','Otidimorphae_5','Opisthocomiformes_6',
+                                            'Cursorimorphae_7','Strisores_8','Phaethontimorphae_9',
+                                            'Aequornithes_10','Afroaves_11','Australaves_12'))
+d2 <- p2$data
+
+d2$x <- max(d2$x) - d2$x + max(d1$x) + 15 #4
+dd = bind_rows(d1,d2) %>% 
+  filter(!is.na(label)) 
+
+p1 <- p1 +
+  geom_tree()+
+  geom_tree(data = d2)+
+  geom_tiplab(size = 1.5)+
+  geom_tiplab(data= d2, size = 1.5, hjust=1)+
+  geom_nodelab(size = 1.5, nudge_x = -0.7, nudge_y = 0.6)+
+  geom_nodelab(data=d2, size = 1.5, nudge_x = 0.7, nudge_y = 0.6 )+
+  geom_line(aes(x, y, group=label), data=dd %>% filter(isTip), alpha=0.3)
+```

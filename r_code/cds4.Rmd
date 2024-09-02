@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # grouping main clades
 ```{r}
-abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/63K_abb.treefile")
+abbmain_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/63K_abb.treefile")
 
 abbmain_tree <- root(abbmain_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 
@@ -28,7 +28,7 @@ grp <- list(Palaeognathae_1 = d2[[4]][345:363],
             Phaethontimorphae_9 = d2[[4]][244:246],
             Aequornithes_10 = d2[[4]][247:273],
             Afroaves_11 = d2[[4]][206:243],
-            Australaves_12 = d2[[4]][19:205]
+            Australaves_12 = d2[[4]][22:205]
             )
 
 abbmain_tree <- groupOTU(abbmain_tree, grp, 'lab')
@@ -40,6 +40,8 @@ p$data$lab <- factor(p$data$lab, levels = c('Palaeognathae_1','Galloanseres_2','
                                             'Columbimorphae_4','Otidimorphae_5','Opisthocomiformes_6',
                                             'Cursorimorphae_7','Strisores_8','Phaethontimorphae_9',
                                             'Aequornithes_10','Afroaves_11','Australaves_12'))
+
+
 ```
 
 
