@@ -49,6 +49,38 @@ def run_mix12(tuple_list):
         #f.write(result.stdout)
         f.write(result.stderr)        
 
+def run_part123(tuple_list):   
+    model, i = tuple_list
+    f_name = 'c123/'+ f_list[i].split(" ")[1].split('.')[0] + '.cds.fa'
+    out_name = 'part_c123/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
+
+    part_name = 'c123/'+ f_list[i].split(" ")[1].split('.')[0] + '_part.nex'
+    if not os.path.isfile(part_name):
+        amas_cmd = 'python3 AMAS.py concat -f fasta -d dna -i ' + f_name + ' -u fasta -p ' + part_name + ' -n 123 --part-format nexus -t ' + f_name
+        os.system(amas_cmd)
+
+    cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MFP+MERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+f_name + ' -p '+part_name
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name + '_time.txt', 'w') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)
+        
+def run_part12(tuple_list):      
+    model, i = tuple_list 
+    f_name = 'c12/'+ f_list[i].split(" ")[1].split('.')[0] + '.cds.fa'
+    out_name = 'part_c12/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
+
+    part_name = 'c12/'+ f_list[i].split(" ")[1].split('.')[0] + '_part.nex'
+    if not os.path.isfile(part_name):
+        amas_cmd = 'python3 AMAS.py concat -f fasta -d dna -i ' + f_name + ' -u fasta -p ' + part_name + ' -n 12 --part-format nexus -t ' + f_name
+        os.system(amas_cmd)
+
+    cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MFP+MERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+f_name + ' -p '+part_name
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name + '_time.txt', 'w') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)  
+
 def run_aa(tuple_list):     
     model, i = tuple_list
     f_name = 'pep/'+ f_list[i].split(" ")[1].split('.')[0] + '.pep.fa'
@@ -95,7 +127,7 @@ def run_aa_c20(tuple_list):
 
 # 14972
 def control(model, start, end, n_pool):
-    if model not in ['mix123', 'mix12', 'aa', 'aa_c20']:
+    if model not in ['mix123', 'mix12', 'aa', 'aa_c20', 'part123', 'part12']:
         print("wrong model type")
         sys.exit(1)
            
@@ -116,6 +148,10 @@ def control(model, start, end, n_pool):
         partial_running = partial(run_mix123)
     elif model == 'mix12':
         partial_running = partial(run_mix12)
+    elif model == 'part123':
+        partial_running = partial(run_part123)
+    elif model == 'part12':
+        partial_running = partial(run_part12)
     elif model == 'aa':
         partial_running = partial(run_aa)
     elif model == 'aa_c20':
@@ -125,7 +161,7 @@ def control(model, start, end, n_pool):
         p.map(partial_running, tuple_list)
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--model', '-m', help='one of mix123 mix12 aa aa_c20',
+parser.add_argument('--model', '-m', help='one of mix123 mix12 aa aa_c20 part123',
                     required=True)
 parser.add_argument('--start', '-r1', help='', 
                     required=True)
