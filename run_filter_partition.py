@@ -77,7 +77,7 @@ def run_mix12(tuple_list):
     
     out_name = 'mix_c12_filtered3/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s ' + filtered_f_name 
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s ' + filtered_f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
@@ -105,7 +105,7 @@ def run_part123(tuple_list):
 
     out_name = 'part_c123_filtered3/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m TESTMERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+ filtered_f_name + ' -p '+part_name
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m TESTMERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+ filtered_f_name + ' -p '+part_name
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
@@ -133,7 +133,7 @@ def run_part12(tuple_list):
 
     out_name = 'part_c12_filtered3/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m TESTMERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+ filtered_f_name + ' -p '+part_name
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m TESTMERGE -mset GTR -mfreq FO -pre '+out_name+ ' -nt 1 -s '+ filtered_f_name + ' -p '+part_name
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
@@ -156,7 +156,7 @@ def run_aa(tuple_list):
         
     out_name = 'aa_filtered3/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MFP -mrate E,I,G,I+G -pre '+ out_name + ' -nt 1 -s '+ filtered_f_name 
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MFP -mrate E,I,G,I+G -pre '+ out_name + ' -nt 1 -s '+ filtered_f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
@@ -179,7 +179,7 @@ def run_aa_c20(tuple_list):
         
     out_name = 'aa_c20_filtered3/'+str(i) + '_' + name
         
-    cmd1 = '/usr/bin/time -v /scratch/dx61/hr8997/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m Q.bird+C20+I+G -pre '+ out_name + ' -nt 1 -s '+ filtered_f_name 
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m Q.bird+C20+I+G -pre '+ out_name + ' -nt 1 -s '+ filtered_f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
