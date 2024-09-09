@@ -1,8 +1,8 @@
 import os
 import csv 
 
-iqtree_folder = 'mix_c12_filtered3/'
-output_file = 'astral_trees/mix12_1k.txt'
+iqtree_folder = 'part_c12_filtered3/'
+output_file = 'astral_trees/part12_1k.txt'
 # =============================================================================
 # result_csv = 'astral_trees/aa.csv'
 # with open(result_csv,'w+',newline='') as csvf:
