@@ -54,7 +54,7 @@ def run_mix123(tuple_list):
     
     out_name = 'mix_c123_filtered3/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s ' + filtered_f_name 
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s ' + filtered_f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
     with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
