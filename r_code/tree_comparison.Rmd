@@ -99,20 +99,21 @@ partc12_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian Natio
 partc123_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/part123_2k_unrooted.treefile")
 mixc12_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/mix12_2k_unrooted.treefile")
 mixc123_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/mix123_2k_unrooted.treefile")
+ref_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/ref_2k_pruned_unrooted.treefile")
 
 partc12_2k_tree <- root(partc12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 partc123_2k_tree <- root(partc123_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 mixc12_2k_tree <- root(mixc12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 mixc123_2k_tree <- root(mixc123_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
-
+ref_2k_tree <- root(ref_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
 
 
 
 ```{r}
-tree1 <- groupOTU(partc123_tree, grp, 'clade')
-tree2 <- groupOTU(partc123_2k_tree, grp, 'clade')
+tree1 <- groupOTU(exon_tree, grp, 'clade')
+tree2 <- groupOTU(ref_2k_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
