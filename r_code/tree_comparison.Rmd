@@ -109,11 +109,17 @@ ref_2k_tree <- root(ref_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
 
+```{r}
+mixc123_7k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon7k/mix123_7k_unrooted.treefile")
+
+mixc123_7k_tree <- root(mixc123_7k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+```
 
 
 ```{r}
-tree1 <- groupOTU(exon_tree, grp, 'clade')
-tree2 <- groupOTU(ref_2k_tree, grp, 'clade')
+tree1 <- groupOTU(main_tree, grp, 'clade')
+tree2 <- groupOTU(exon_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -150,7 +156,7 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon1k/mix12_vs_main.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon7k/mix123_vs_main.pdf"
 
 pdf(file = output_path, width = 10, height = 10)
 print(p1)

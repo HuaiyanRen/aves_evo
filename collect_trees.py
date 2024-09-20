@@ -1,8 +1,8 @@
 import os
 import csv 
 
-iqtree_folder = 'part_c123_filtered3/'
-output_file = 'astral_trees/part123_2k.txt'
+iqtree_folder = 'mix_c123_filtered3/'
+output_file = 'astral_trees/mix123_2_7k.txt'
 # =============================================================================
 # result_csv = 'astral_trees/aa.csv'
 # with open(result_csv,'w+',newline='') as csvf:
@@ -17,7 +17,7 @@ with open("exon_namelist_random.txt") as f:
 treefile_list = []
 exclude_list = []
 n =0
-for i in range(0,2000):
+for i in range(2000,7000):
     #if i not in [3, 9, 11, 24, 27, 28, 29, 44, 50, 65, 76, 80, 95, 96]:
         loci_name = f_list[i].split(" ")[1].rstrip() 
         iqtree_name = iqtree_folder + str(i) + '_' + loci_name +'.iqtree'
