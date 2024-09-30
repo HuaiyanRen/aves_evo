@@ -5,12 +5,12 @@ def abbreviate_species_name(species_name):
     abbreviation = ''.join([word[:3].upper() for word in words])
     return abbreviation
 
-candi_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\exon200.treefile'
+candi_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\ref_trees\63K_abb.treefile'
 candi_treestr = open(candi_treefile,'r').read()
 candi_tree = Tree(candi_treestr,format = 1)
 
         
-ref_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\63K.treefile'
+ref_treefile = r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\ref_trees\63K_unrooted.treefile'
 ref_treestr = open(ref_treefile,'r').read()
 ref_tree = Tree(ref_treestr,format = 1)
 
@@ -104,4 +104,40 @@ for n in ref_tree.traverse():
 ref_tree.unroot()
 with open(r'C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\63K_unrooted.treefile', 'w+') as result:
     result.write(ref_tree.write(format = 1) + '\n')   
+
+
+import pandas as pd
+taxa_file = r"C:\Users\u7151703\OneDrive - Australian National University\Desktop\research\aves_evo\draft_results\taxa_filter.csv"
+
+df = pd.read_csv(taxa_file)
+filtered_df = df[df['filter_to_3'] != True]
+filtered_list = list(filtered_df['label'].astype(str))
+result_string = ''
+
+for abb in filtered_list:
+    if abb in taxon_list_short:
+        full_name = find_taxon_name(abb)
+    elif abb == 'NANAUR':
+        full_name = find_taxon_name('PHAAUR')
+        print(1)
+    elif abb == 'NANBRA':
+        full_name = find_taxon_name('PHABRA')
+        print(2)
+    elif abb == 'NANHAR':
+        full_name = find_taxon_name('PHAHAR')
+        print(3)
+    elif abb == 'PORRUF':
+        full_name = 'Pomatorhinus_ruficollis'
+        print(4)
+    elif abb == 'POSRUF':
+        full_name = 'Pomatostomus_ruficeps'
+        print(5)
+    elif abb == 'URIPEL':
+        full_name = find_taxon_name('PHAPEL')
+        print(6)
+    else:
+        print('outlier!')
+    result_string = result_string + ' ' + full_name
+
+print(result_string)
             
