@@ -27,8 +27,7 @@ with open('63430.named.gene.trees') as f:
             n = n + 1
 
 print(n)
-print(name_list)
 
 with open(output_file, 'w') as output_file:
     for treefile in treefile_list:
-        output_file.write(treefile)
+        output_file.write(f"{treefile}\n")
