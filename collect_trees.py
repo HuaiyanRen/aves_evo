@@ -1,8 +1,8 @@
 import os
 import csv 
 
-iqtree_folder = 'mix_c123_filtered3/'
-output_file = 'astral_trees/mix123_2_7k.txt'
+iqtree_folder = 'chr1_filtered3/'
+output_file = 'astral_trees/mix_chr1.txt'
 # =============================================================================
 # result_csv = 'astral_trees/aa.csv'
 # with open(result_csv,'w+',newline='') as csvf:
@@ -11,18 +11,18 @@ output_file = 'astral_trees/mix123_2_7k.txt'
 # =============================================================================
 
 
-with open("exon_namelist_random.txt") as f:
+with open("chr1_namelist_random.txt") as f:
     f_list = f.readlines()
 
 treefile_list = []
 exclude_list = []
 n =0
-for i in range(2000,7000):
+for i in range(0,1266):
     #if i not in [3, 9, 11, 24, 27, 28, 29, 44, 50, 65, 76, 80, 95, 96]:
         loci_name = f_list[i].split(" ")[1].rstrip() 
         iqtree_name = iqtree_folder + str(i) + '_' + loci_name +'.iqtree'
         tree_name = iqtree_folder + str(i) + '_' + loci_name +'.treefile'
-            
+         
         if os.path.isfile(iqtree_name):
             #file_order = int(file.split('_')[0])
             #if file_order in list1:
