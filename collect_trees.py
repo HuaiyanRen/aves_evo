@@ -1,8 +1,8 @@
 import os
 import csv 
 
-iqtree_folder = 'chr1_filtered3/'
-output_file = 'astral_trees/mix_chr1.txt'
+iqtree_folder = 'c1_chr1_filtered3/'
+output_file = 'astral_trees/c1_chr1.txt'
 # =============================================================================
 # result_csv = 'astral_trees/aa.csv'
 # with open(result_csv,'w+',newline='') as csvf:
