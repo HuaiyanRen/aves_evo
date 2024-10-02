@@ -60,6 +60,29 @@ def run_mix123(tuple_list):
         #f.write(result.stdout)
         f.write(result.stderr)
 
+def run_c1123(tuple_list):   
+    model, i = tuple_list
+    
+    if not os.path.exists('c123_filtered3'):
+        os.makedirs('c123_filtered3')
+    if not os.path.exists('c1_c123_filtered3'):
+        os.makedirs('c1_c123_filtered3')
+        
+    name = f_list[i].split(" ")[1].rstrip()    
+    f_name = 'c123/'+ name + '.cds.fa'
+    filtered_f_name = 'c123_filtered3/'+ name + '.cds.fa-out.fas'
+    if not os.path.isfile(filtered_f_name):
+        filter_cmd = 'python3 AMAS.py remove -x ' + result_string + ' -d dna -f fasta -i ' + f_name + ' -u fasta -g c123_filtered3/'
+        os.system(filter_cmd)
+    
+    out_name = 'c1_c123_filtered3/'+str(i) + '_' + name
+
+    cmd1 = '/usr/bin/time -v /home/remote/u7151703/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MFP -mset GTR -mfreq FO -mrate E,I,G,I+G -pre '+out_name+ ' -nt 1 -s ' + filtered_f_name 
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name + '_time.txt', 'a+') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)
+
 def run_mix12(tuple_list):      
     model, i = tuple_list 
     
@@ -187,7 +210,7 @@ def run_aa_c20(tuple_list):
 
 # 14972
 def control(model, start, end, n_pool):
-    if model not in ['mix123', 'mix12', 'aa', 'aa_c20', 'part123', 'part12']:
+    if model not in ['mix123', 'c1123', 'mix12', 'aa', 'aa_c20', 'part123', 'part12']:
         print("wrong model type")
         sys.exit(1)
            
@@ -208,6 +231,8 @@ def control(model, start, end, n_pool):
         
     if model == 'mix123':
         partial_running = partial(run_mix123)
+    elif model == 'c1123':
+        partial_running = partial(run_c1123)
     elif model == 'mix12':
         partial_running = partial(run_mix12)
     elif model == 'part123':
