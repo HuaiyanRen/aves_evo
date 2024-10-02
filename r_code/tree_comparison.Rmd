@@ -73,6 +73,17 @@ p1 <- p1 +
 
 # 1000 loci
 ```{r}
+main363_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/63K_abb.treefile")
+exon363_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/exon_ref_unrooted.treefile")
+```
+
+```{r}
+main363_tree <- root(main363_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+exon363_tree <- root(exon363_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+```
+
+
+```{r}
 main_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon1k/main_pruned.treefile")
 exon_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon1k/exon_pruned.treefile")
 
@@ -85,7 +96,7 @@ ref_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National Uni
 
 ```{r}
 main_tree <- root(main_tree, outgroup = 'STRCAM', edgelabel = TRUE)
-exon_tree <- root(mixc123_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+exon_tree <- root(exon_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 
 partc12_tree <- root(partc12_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 partc123_tree <- root(partc123_tree, outgroup = 'STRCAM', edgelabel = TRUE)
@@ -124,9 +135,11 @@ mixc123_all_tree <- root(mixc123_all_tree, outgroup = 'STRCAM', edgelabel = TRUE
 # intergenic
 ```{r}
 mix_chr1_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/inter/mix_chr1_unrooted.treefile")
+c1_chr1_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/inter/c1_chr1_unrooted.treefile")
 ref_chr1_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/inter/ref_chr1_unrooted.treefile")
 
 mix_chr1_tree <- root(mix_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+c1_chr1_tree <- root(c1_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ref_chr1_tree <- root(ref_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
@@ -134,7 +147,7 @@ ref_chr1_tree <- root(ref_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 
 ```{r}
 tree1 <- groupOTU(main_tree, grp, 'clade')
-tree2 <- groupOTU(ref_chr1_tree, grp, 'clade')
+tree2 <- groupOTU(exon_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -171,7 +184,7 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/inter/refchr1_vs_main.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon_all/exonref_vs_main.pdf"
 
 pdf(file = output_path, width = 10, height = 10)
 print(p1)
