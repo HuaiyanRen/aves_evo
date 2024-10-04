@@ -112,6 +112,7 @@ mixc12_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian Nation
 mixc123_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/mix123_2k_unrooted.treefile")
 ref_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/ref_2k_pruned_unrooted.treefile")
 c1123_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/c1123_2k_unrooted.treefile")
+c112_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/c112_2k_unrooted.treefile")
 
 partc12_2k_tree <- root(partc12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 partc123_2k_tree <- root(partc123_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
@@ -119,6 +120,7 @@ mixc12_2k_tree <- root(mixc12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 mixc123_2k_tree <- root(mixc123_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ref_2k_tree <- root(ref_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 c1123_2k_tree <- root(c1123_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+c112_2k_tree <- root(c112_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
 
@@ -148,8 +150,8 @@ ref_chr1_tree <- root(ref_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 
 
 ```{r}
-tree1 <- groupOTU(main363_tree, grp, 'clade')
-tree2 <- groupOTU(exon363_tree, grp, 'clade')
+tree1 <- groupOTU(main_tree, grp, 'clade')
+tree2 <- groupOTU(c112_2k_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -186,9 +188,9 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/ref_trees/main363_vs_exon363.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/c112_vs_main.pdf"
 
-pdf(file = output_path, width = 10, height = 20)
+pdf(file = output_path, width = 10, height = 10)
 print(p1)
 dev.off()
 
