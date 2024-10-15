@@ -151,7 +151,7 @@ ref_chr1_tree <- root(ref_chr1_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 
 ```{r}
 tree1 <- groupOTU(main_tree, grp, 'clade')
-tree2 <- groupOTU(c112_2k_tree, grp, 'clade')
+tree2 <- groupOTU(partc123_2k_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -188,19 +188,12 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/c112_vs_main.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/exon2k/partc123_vs_main.pdf"
 
 pdf(file = output_path, width = 10, height = 10)
 print(p1)
 dev.off()
 
 ```
-
-
-
-
-
-
-
 
 
