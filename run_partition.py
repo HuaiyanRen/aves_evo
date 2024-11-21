@@ -23,31 +23,74 @@ import os
 # =============================================================================
 
 
-with open("14972_exon_alns_namelist.txt") as f:
+with open("exon_namelist_random.txt") as f:
     f_list = f.readlines()
 
 def run_mix123(tuple_list):   
     model, i = tuple_list
-    f_name = 'c123/'+ f_list[i].split(" ")[1].split('.')[0] + '.cds.fa'
-    out_name = 'mix_c123/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
+    
+    if not os.path.exists('mix_c123'):
+        os.makedirs('mix_c123')
+    
+    name = f_list[i].split(" ")[1].rstrip()    
+    f_name = 'c123/'+ name + '.cds.fa'
+    out_name = 'mix_c123/'+str(i) + '_' + name
 
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G,R,I+R -wspm -qmax 20 -pre '+out_name+ ' -nt 1 -s '+f_name 
+    cmd1 = '/usr/bin/time -v /home/huaiyan/software/iqtree-2.3.6.6.mf-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s '+f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
-    with open(out_name + '_time.txt', 'w') as f:
+    with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
         f.write(result.stderr)
         
 def run_mix12(tuple_list):      
     model, i = tuple_list 
-    f_name = 'c12/'+ f_list[i].split(" ")[1].split('.')[0] + '.cds.fa'
-    out_name = 'mix_c12/'+str(i) + '_' + f_list[i].split(" ")[1].split('.')[0]
+    
+    if not os.path.exists('mix_c12'):
+        os.makedirs('mix_c12')
+    
+    name = f_list[i].split(" ")[1].rstrip()    
+    f_name = 'c12/'+ name + '.cds.fa'
+    out_name = 'mix_c12/'+str(i) + '_' + name
 
-    cmd1 = '/usr/bin/time -v /data/huaiyan/software/iqtree-2.3.5.1.mixfinder-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G,R,I+R -wspm -qmax 20 -pre '+out_name+ ' -nt 1 -s '+f_name 
+    cmd1 = '/usr/bin/time -v /home/huaiyan/software/iqtree-2.3.6.6.mf-Linux-intel/bin/iqtree2 -m MIX+MFP -mset GTR -mrate E,I,G,I+G -wspm -pre '+out_name+ ' -nt 1 -s '+f_name 
     result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
-    with open(out_name + '_time.txt', 'w') as f:
+    with open(out_name + '_time.txt', 'a+') as f:
         #f.write(result.stdout)
         f.write(result.stderr)        
+
+def run_sin123(tuple_list):   
+    model, i = tuple_list
+    
+    if not os.path.exists('sin_c123'):
+        os.makedirs('sin_c123')
+    
+    name = f_list[i].split(" ")[1].rstrip()    
+    f_name = 'c123/'+ name + '.cds.fa'
+    out_name = 'sin_c123/'+str(i) + '_' + name
+
+
+    cmd1 = '/usr/bin/time -v /home/huaiyan/software/iqtree-2.3.6.6.mf-Linux-intel/bin/iqtree2 -m MFP -mset GTR -mrate E,I,G,I+G -pre '+out_name+ ' -nt 1 -s '+f_name 
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name + '_time.txt', 'a+') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)
+        
+def run_sin12(tuple_list):      
+    model, i = tuple_list 
+    
+    if not os.path.exists('sin_c12'):
+        os.makedirs('sin_c12')
+    
+    name = f_list[i].split(" ")[1].rstrip()    
+    f_name = 'c12/'+ name + '.cds.fa'
+    out_name = 'sin_c12/'+str(i) + '_' + name
+
+    cmd1 = '/usr/bin/time -v /home/huaiyan/software/iqtree-2.3.6.6.mf-Linux-intel/bin/iqtree2 -m MFP -mset GTR -mrate E,I,G,I+G -pre '+out_name+ ' -nt 1 -s '+f_name 
+    result = subprocess.run(cmd1, shell=True, text=True, capture_output=True)
+    with open(out_name + '_time.txt', 'a+') as f:
+        #f.write(result.stdout)
+        f.write(result.stderr)  
 
 def run_part123(tuple_list):   
     model, i = tuple_list
@@ -127,7 +170,7 @@ def run_aa_c20(tuple_list):
 
 # 14972
 def control(model, start, end, n_pool):
-    if model not in ['mix123', 'mix12', 'aa', 'aa_c20', 'part123', 'part12']:
+    if model not in ['mix123', 'mix12', 'sin123', 'sin12', 'aa', 'aa_c20', 'part123', 'part12']:
         print("wrong model type")
         sys.exit(1)
            
@@ -148,6 +191,10 @@ def control(model, start, end, n_pool):
         partial_running = partial(run_mix123)
     elif model == 'mix12':
         partial_running = partial(run_mix12)
+    elif model == 'sin123':
+        partial_running = partial(run_sin123)
+    elif model == 'sin12':
+        partial_running = partial(run_sin12)
     elif model == 'part123':
         partial_running = partial(run_part123)
     elif model == 'part12':
