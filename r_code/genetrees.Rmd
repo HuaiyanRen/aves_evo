@@ -1,0 +1,107 @@
+---
+title: "Untitled"
+author: "u7151703"
+date: "2024-11-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+rf_c12 <- rbind(rf_sin_c12, rf_mix_c12)
+
+rf_c12_diff <- data.frame(
+  name = rf_sin_c12$name,
+  nrf_main_diff = rf_sin_c12$nrf_main - rf_mix_c12$nrf_main,
+  nrf_exon_diff = rf_sin_c12$nrf_exon - rf_mix_c12$nrf_exon,
+  nrf_gene_diff = rf_sin_c12$nrf_gene - rf_mix_c12$nrf_gene
+)
+```
+
+```{r}
+t.test(rf_sin_c12$nrf_main, rf_mix_c12$nrf_main, paired = TRUE)
+```
+
+
+```{r}
+
+
+ggplot(result_total, aes(x= pythia_score, y = nrf, color = ntaxa))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+
+
+
+ggplot(result_total, aes(x= pythia_score, y = nrf_gene1, color = ntaxa))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+
+ggplot(result_total, aes(x= pythia_score, y = nrf_gene2, color = ntaxa))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+
+ggplot(result_total, aes(x= pythia_score, y = ntaxa, color = nrf))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+```
+
+```{r}
+ggplot(result_total, aes(x= pythia_score, y  = ntaxa))+
+  geom_point()+
+  theme_bw()
+
+ggplot(result_total, aes(x= pythia_score, y  = nsites))+
+  geom_point()+
+  theme_bw()
+```
+
+```{r}
+ggplot(result_total, aes(x= pythia_score, y = nrf, color = classes))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+
+ggplot(result_total , aes(x= pythia_score, y = nrf_main1 - nrf_main2, color = classes))+
+  scale_color_gradientn(
+    values = seq(0,1),
+    colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
+    )+
+  geom_point()+
+  theme_bw()
+
+ggplot(result_total , aes( y = nrf_main2, x = classes))+
+
+  geom_jitter()+
+  theme_bw()
+```
+
+
+
+```{r}
+filter_num <- result_total$num[which(result_total$pythia_score < 0.65)]
+cat(filter_num, sep = ", ")
+```
+
+

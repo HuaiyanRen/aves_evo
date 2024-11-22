@@ -74,11 +74,10 @@ def run_rf(tuple_list):
     pruned_m_treefile = folder + '/'+str(i) + '_' + name + '_main_pruned.treefile'
     pruned_e_treefile = folder + '/'+str(i) + '_' + name + '_exon_pruned.treefile'
     
-    
     if not os.path.isfile(folder + '/'+str(i) + '_' + name + '.uniqueseq.phy'):
         gene_treestr = open(candi_treefile,'r').read()
         gene_tree = Tree(gene_treestr)
-        taxa = set(gene_tree.get_leaf_names())
+        taxa = set(gene_tree.get_leaf_names())       
     else:
         taxa = read_phylip(folder + '/'+str(i) + '_' + name + '.uniqueseq.phy')
         
@@ -98,7 +97,7 @@ def run_rf(tuple_list):
 
         with open(folder + '/'+str(i) + '_' + name+ '_uniqueexon.treefile', 'w+') as result:
             result.write(species_tree.write() + '\n')
-        gene_treefile = folder + '/'+str(i) + '_' + name +  '_uniqueexon.treefile'         
+        gene_treefile = folder + '/'+str(i) + '_' + name +  '_uniqueexon.treefile'
 
     if not os.path.isfile(pruned_m_treefile):        
         
