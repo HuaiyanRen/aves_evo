@@ -33,10 +33,10 @@ def run_i(i):
             f.write(result.stdout)
             f.write(result.stderr)
             
-i_list = list(range(0,1000,1))
+i_list = list(range(1000,2000,1))
 
 partial_running = partial(run_i)
 
-with Pool(20) as p:
+with Pool(100) as p:
     score_list = p.map(partial_running, i_list) 
             

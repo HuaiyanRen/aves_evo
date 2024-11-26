@@ -24,16 +24,35 @@ exon363_tree <- root(exon363_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```{r}
 mix12_1k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_1k_unrooted.treefile")
 mix12_1k_tree <- root(mix12_1k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
-
 sin12_1k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_1k_unrooted.treefile")
 sin12_1k_tree <- root(sin12_1k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+mix12_1k_f_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_1k_filter_unrooted.treefile")
+mix12_1k_f_tree <- root(mix12_1k_f_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+sin12_1k_f_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_1k_filter_unrooted.treefile")
+sin12_1k_f_tree <- root(sin12_1k_f_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+mix12_1k_f1c_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_1k_f1c_unrooted.treefile")
+mix12_1k_f1c_tree <- root(mix12_1k_f1c_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+sin12_1k_f1c_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_1k_f1c_unrooted.treefile")
+sin12_1k_f1c_tree <- root(sin12_1k_f1c_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+mix12_1k_f2c_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_1k_f2c_unrooted.treefile")
+mix12_1k_f2c_tree <- root(mix12_1k_f2c_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+sin12_1k_f2c_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_1k_f2c_unrooted.treefile")
+sin12_1k_f2c_tree <- root(sin12_1k_f2c_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+
+mix12_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_2k_unrooted.treefile")
+mix12_2k_tree <- root(mix12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
+sin12_2k_tree <- ape::read.tree("C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_2k_unrooted.treefile")
+sin12_2k_tree <- root(sin12_2k_tree, outgroup = 'STRCAM', edgelabel = TRUE)
 ```
 
 
 
 ```{r}
-tree1 <- groupOTU(exon363_tree, grp, 'clade')
-tree2 <- groupOTU(mix12_1k_tree, grp, 'clade')
+tree1 <- groupOTU(main363_tree, grp, 'clade')
+tree2 <- groupOTU(sin12_2k_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -70,7 +89,7 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_1k_vs_exon.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/sin12_1k_f2c_vs_main.pdf"
 
 pdf(file = output_path, width = 20, height = 20)
 print(p1)

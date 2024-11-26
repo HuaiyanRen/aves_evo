@@ -10,7 +10,7 @@ with open('result_total.csv','w+',newline='') as csvf:
 with open("exon_namelist_random.txt") as f:
     f_list = f.readlines()
 
-for i in range(0,1000):   
+for i in range(0,2000):   
     
     name = f_list[i].split(" ")[1].rstrip() 
     

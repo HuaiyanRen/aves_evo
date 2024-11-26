@@ -131,8 +131,8 @@ def run_rf(tuple_list):
         cmd = '/home/huaiyan/software/iqtree-2.3.6.6.mf-Linux-intel/bin/iqtree2 -rf ' + candi_treefile + ' ' + gene_treefile + ' -redo -pre ' + folder + '/'+str(i) + '_' + name + '_rfgene'
         os.system(cmd)
 
-i_list = list(range(0,1000,1))
-result_folder = 'sin_c12'
+i_list = list(range(1000,2000,1))
+result_folder = 'mix_c12'
 tuple_list = ['']*len(i_list)
 
 for i in range(len(tuple_list)):
@@ -140,5 +140,5 @@ for i in range(len(tuple_list)):
 
 partial_running = partial(run_rf)
 
-with Pool(50) as p:
+with Pool(100) as p:
     score_list = p.map(partial_running, tuple_list)   

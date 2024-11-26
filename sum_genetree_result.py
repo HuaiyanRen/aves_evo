@@ -12,7 +12,7 @@ with open(result_csv,'w+',newline='') as csvf:
                         'rf_main', 'rf_exon', 'rf_gene',
                         'nrf_main', 'nrf_exon', 'nrf_gene'])
 
-for i in range(0,1000):
+for i in range(0,2000):
     name = f_list[i].split(" ")[1].rstrip()
     
     if not os.path.isfile(folder + '/'+str(i) + '_' + name + '.uniqueseq.phy'):
