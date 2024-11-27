@@ -11,7 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-t.test(result_total$nrf_main1[1000:2000], result_total$nrf_main2[1000:2000], paired = TRUE)
+result_sub = result_total %>% filter(classes > 9)
+
+
+t.test(result_sub$nrf_main1, result_sub$nrf_main2, paired = TRUE)
 ```
 
 
@@ -24,7 +27,7 @@ ggplot(result_total, aes(x= pythia_score, y = nrf, color = ntaxa))+
   geom_point()+
   theme_bw()
 
-ggplot(result_total, aes(x= pythia_score, y = nrf_exon1 - nrf_exon2, color = ntaxa))+
+ggplot(result_total%>% filter(classes > 5), aes(x= pythia_score, y = nrf_main1 - nrf_main2, color = ntaxa))+
   scale_color_gradientn(
     values = seq(0,1),
     colors = c('#91c1d4', "#ddf1f3", "#ecf4dd", "#fff7ac", "#ecb477", "#E87651"),
@@ -92,7 +95,16 @@ ggplot(result_total %>% filter(classes > 2), aes(x= pythia_score, y = nrf, color
 ```
 
 ```{r}
-filter_num <- result_total$num[which(result_total$pythia_score <0.75)]
+ggplot(result_total, aes(x= pythia_score))+
+  geom_histogram()+
+  facet_wrap(~as.factor(classes))+
+  theme_bw()
+
+
+```
+
+```{r}
+filter_num <- result_total$num[which(result_total$classes > 2)]
 cat(filter_num, sep = ", ")
 ```
 
