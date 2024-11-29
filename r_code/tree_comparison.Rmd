@@ -62,7 +62,7 @@ sin12_2k_f2c_tree <- root(sin12_2k_f2c_tree, outgroup = 'STRCAM', edgelabel = TR
 
 ```{r}
 tree1 <- groupOTU(main363_tree, grp, 'clade')
-tree2 <- groupOTU(mix12_2k_tree, grp, 'clade')
+tree2 <- groupOTU(sin12_2k_f2c_tree, grp, 'clade')
 
 p1 <- ggtree(tree1, branch.length = 'none', aes(color = clade))
 p2 <- ggtree(tree2, branch.length = 'none', aes(color = clade))
@@ -99,7 +99,7 @@ p1 <- p1 +
 
 
 ```{r}
-output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_2k_vs_main.pdf"
+output_path <- "C:/Users/u7151703/OneDrive - Australian National University/Desktop/research/aves_evo/draft_results/full/mix12_2k_f2c_vs_main.pdf"
 
 pdf(file = output_path, width = 20, height = 20)
 print(p1)
