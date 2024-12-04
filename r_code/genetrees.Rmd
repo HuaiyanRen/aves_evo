@@ -100,7 +100,16 @@ ggplot(result_total, aes(x= pythia_score))+
   facet_wrap(~as.factor(classes))+
   theme_bw()
 
+ggplot(result_total, aes(x= ntaxa))+
+  geom_density()+
+  #facet_wrap(~as.factor(classes))+
+  theme_bw()
 
+ggplot(result_total, aes(x= nsites))+
+  geom_density()+
+  #xlim(0,500)+
+  #facet_wrap(~as.factor(classes))+
+  theme_bw()
 ```
 
 ```{r}
